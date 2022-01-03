@@ -1,29 +1,22 @@
-package org.worker.concurrent.reentrantlock;
+package org.worker.concurrent.threadlocal;
 
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author peiru wang
- * @date 2021/6/15
+ * @date 2021/9/12
  */
-public class ReentrantLockDemo {
-
-    private static int count = 0;
+public class ThreadLocalDemo {
+    private static ThreadLocal<String> threadLocal = new ThreadLocal<>();
 
     public static void main(String[] args) {
-
-        Lock lock = new ReentrantLock();
-
         Thread t1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                lock.lock();
-                System.out.println("before t1");
+                threadLocal.set(Thread.currentThread().getName());
+                threadLocal.set(Thread.currentThread().getName() + "12");
 
-//                Thread.yield();
+                System.out.println("thread1");
 
                 try {
                     TimeUnit.SECONDS.sleep(2);
@@ -31,48 +24,33 @@ public class ReentrantLockDemo {
                     e.printStackTrace();
                 }
 
-                System.out.println("after t2");
-                lock.unlock();
-
-
-
+                System.out.println("t1" + threadLocal.get());
             }
         });
 
         Thread t2 = new Thread(new Runnable() {
             @Override
             public void run() {
-                lock.lock();
-                System.out.println("before t2");
+                threadLocal.set(Thread.currentThread().getName());
 
+                System.out.println("thread2");
                 try {
                     TimeUnit.SECONDS.sleep(2);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                lock.unlock();
 
+                System.out.println("t2" + threadLocal.get());
             }
         });
 
-        t1.start();
-
         t2.start();
-
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        t1.interrupt();
+        t1.start();
 
         try {
             TimeUnit.SECONDS.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        System.out.println(count);
     }
 }

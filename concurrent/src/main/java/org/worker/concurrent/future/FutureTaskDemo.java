@@ -6,7 +6,7 @@ import java.util.concurrent.*;
  * @author peiru wang
  * @date 2021/6/24
  */
-public class FutureDemo {
+public class FutureTaskDemo {
 
     public static void main(String[] args) {
 

@@ -16,8 +16,11 @@ public class MyBatisDemo {
     public static void main(String[] args) {
         try {
             InputStream is = Resources.getResourceAsStream("mybatis-config.xml");
+
             SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(is);
+
             SqlSession sqlSession = sqlSessionFactory.openSession(true);
+
             StudentMapper mapper = sqlSession.getMapper(StudentMapper.class);
 //            Student student = new Student();
 //            student.setName("feichen");
@@ -27,6 +30,8 @@ public class MyBatisDemo {
 //            System.out.println(one);
             System.out.println("=====first query");
             mapper.selectOneByKey(4);
+            Object o = sqlSession.selectOne(StudentMapper.class.getName() + ".selectOneByKey", 4);
+            System.out.println(o);
             System.out.println("=====second query");
             mapper.selectOneByKey(4);
 

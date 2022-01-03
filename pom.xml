@@ -11,6 +11,24 @@
     <modules>
         <module>concurrent</module>
         <module>ormframework</module>
+        <module>io</module>
+        <module>jvm</module>
     </modules>
 
+    <description>multi-demo</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>3.2.10</version>
+        </dependency>
+    </dependencies>
 </project>

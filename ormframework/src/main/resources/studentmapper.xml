@@ -13,6 +13,13 @@
         select * from Student where id = #{id}
     </select>
 
+    <select id="selectListByKeys" resultMap="baseResultMap">
+        select * from Student where id in
+        <foreach collection="ids" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
     <insert id="insertOne" parameterType="org.worker.ormframework.mybatis.Student">
         insert  into student(name,age,number)values(#{name},#{age},#{number})
     </insert>
